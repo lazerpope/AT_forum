@@ -1,0 +1,10 @@
+//localhost:3000/getMessages?token=8d9d518d-5a0a-469b-b1ed-55bba243bc9d&id=5dc1b639b9ca0a335c92b052
+//localhost:3000/getTopics?token=8d9d518d-5a0a-469b-b1ed-55bba243bc9d
+
+//localhost:3000/createTopic?token=26001de3-36e9-4acc-be48-f4463eb1a661&title=1488&description=322
+http://localhost:3000/updateTopic?token=26001de3-36e9-4acc-be48-f4463eb1a661&id=5dd19167ee80a1102cc79ebb&title=13&description=1488
+http://localhost:3000/deleteTopic?token=44707b23-4bf2-46c2-b9dc-fd0cc6f41c53&id=5dca8858beadd19c9090a4c8
+
+http://localhost:3000/createMessage?token=4050e28c-3ed5-40c8-9fbd-58cac463f693&topicId=5dd56a91477ff047f47b3ba0&text=упячка упячка
+http://localhost:3000/updateMessage?token=4050e28c-3ed5-40c8-9fbd-58cac463f693&id=5dd6cf6551f2993574265a9d&text=упячка упячка упячка
+http://localhost:3000/deleteMessage?token=4050e28c-3ed5-40c8-9fbd-58cac463f693&id=5dd6cf6551f2993574265a9d

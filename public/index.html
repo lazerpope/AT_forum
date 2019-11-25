@@ -1,0 +1,84 @@
+ <html>
+
+<body>
+   Вход:
+   <input id="login" type="text" size="20">
+   <input id="password" type="text" size="20">
+
+   <button id="loginButton">Войти</button><br>
+   Токен:
+   <pre id="tokenOut"></pre>
+   <button id="getTopicsButton">Дай топик</button><br>
+   Топики:
+   <pre id="topicsOut"></pre>
+   <br>
+   ID топика
+   <input id="topicId" type="text" size="20">
+   <button id="getMessagesButton">Получить сообщения</button><br>
+   <br>
+   Сообщения:
+   <pre id="messagesOut"></pre>
+   
+</body>
+
+<script>
+       
+   login.value = "Britva";
+   password.value = "2";
+ 
+   let currentToken="noToken";
+
+   //залогиниться + если все ОК автоматом получить топики по токену
+   loginButton.onclick = async function () 
+   {  
+      let response = await fetch("/login?login=" + encodeURIComponent(login.value)+"&password="+encodeURIComponent(password.value));
+      if (response.ok) 
+      {
+         let data = await response.json();
+         data = data.response;
+         currentToken = data;
+         tokenOut.innerText = currentToken;
+
+      }
+   };
+
+   getTopicsButton.onclick = async function () 
+   {
+   let response = await fetch("/getTopics?token=" + encodeURIComponent(currentToken));
+         if (response.ok) 
+         {           
+            let data = await response.json();     
+            data = data.response;
+            let result="";
+             for(let i of data)
+               {
+                  result += i.id + " "+ i.title+ "\n";
+               }
+
+            topicsOut.innerText = result;
+
+         }
+   }
+
+   //получить сообщения топика
+   getMessagesButton.onclick = async function () 
+   {       
+      let response = await fetch("/getMessages?token=" + encodeURIComponent(currentToken)+"&id="+encodeURIComponent(topicId.value));
+      if (response.ok) 
+         {             
+            let data = await response.json();   
+            data = data.response;
+            let result="";
+             for(let i of data)
+               {
+                  result += i.userId + ": "+ i.text+ "\n";
+               }
+
+            messagesOut.innerText = result;
+
+         }
+   };
+
+</script>
+
+</html>
