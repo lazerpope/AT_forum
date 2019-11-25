@@ -38,7 +38,7 @@ module.exports.createUser = function (firstName, lastName, email, login, passwor
     return obj;
 }
 
-module.exports.responseBubbleSort = function (arr) {
+module.exports.sortResponseByWeight = function (arr) {
     for (let j = arr.length - 1; j > 0; j--) {
         for (let i = 0; i < j; i++) {
             if (arr[i].weight < arr[i + 1].weight) {

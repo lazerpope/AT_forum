@@ -10,7 +10,7 @@ const ObjectId = require('mongodb').ObjectID;
 var cors = require('cors');
 app.use(cors());
 const serverSupportFunctions = require('./server_modules/serverSupportFunctions.js')
-let { reqLog, resLog, errorLog, createMessage, createUser, createTopic, responseBubbleSort} = serverSupportFunctions;
+let { reqLog, resLog, errorLog, createMessage, createUser, createTopic, sortResponseByWeight } = serverSupportFunctions;
 
 let requestCounter = 0;
 
@@ -50,16 +50,16 @@ app.get('/getTopics', async function (req, res)//обрабатываем зап
   }
 
   let dbResponse = await dbModule.find("topics");
-  let i = 0;
-  while (i < dbResponse.length) {
-    let lastMessage = await dbModule.findLastMessage({ topicId: ObjectId(dbResponse[i].id) });
-    dbResponse[i].lastMessage = lastMessage[0] || null;
-    dbResponse[i].weight = dbResponse[i].messagesCount * 2;
-    i++;
+  let messagesToFind = [];
+  for (let i = 0; i < dbResponse.length; i++) {
+    messagesToFind.push(dbModule.findLastMessage({ topicId: ObjectId(dbResponse[i].id) }));
   }
-
-  responseBubbleSort(dbResponse);
-
+  let lastMessages = await Promise.all(messagesToFind);
+  for (let i = 0; i < lastMessages.length; i++) {
+    dbResponse[i].lastMessage = lastMessages[i][0] || null;
+    dbResponse[i].weight = dbResponse[i].messagesCount * 2;
+  }
+  sortResponseByWeight(dbResponse); 
   resLog(currentRequestNumber, "Topics sent : " + dbResponse.length);
   res.send({ response: dbResponse });                            //все ок. Отправка результата
 });
