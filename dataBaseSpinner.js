@@ -6,6 +6,9 @@ const ObjectId = require('mongodb').ObjectID;
 // "C:\Program Files\MongoDB\Server\4.2\bin\mongod.exe" --dbpath="c:\data\db" 
 // "C:\Program Files\MongoDB\Server\4.2\bin\mongo.exe"
 
+//"C:\Program Files\MongoDB\Server\4.2\bin\mongod.exe" --dbpath="c:\data\db" --auth --port 27017 
+// "C:\Program Files\MongoDB\Server\4.2\bin\mongo.exe" --port 27017  --authenticationDatabase "admin" -u "myUserAdmin" -p "myUserAdmin"
+// "C:\Program Files\MongoDB\Server\4.2\bin\mongo.exe" --port 27017 --authenticationDatabase admin -u myAdmin -p pass
 
 //основной скрипт обрабатывающий запросы к ДБ
 
